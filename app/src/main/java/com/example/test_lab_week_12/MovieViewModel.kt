@@ -33,9 +33,9 @@ class MovieViewModel(private val movieRepository: MovieRepository)
 // catch is a terminal operator that catches exceptions from the Flow
             _error.value = "An exception occurred: ${it.message}"
         }.collect {
-// collect is a terminal operator that collects the values from the Flow
-// the results are emitted to the StateFlow
-                    _popularMovies.value = it
+                    movies ->
+            // data filter (descending by popularity)
+                _popularMovies.value = movies.sortedByDescending { it.popularity }
             }
         }
     }
